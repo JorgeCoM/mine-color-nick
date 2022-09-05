@@ -100,7 +100,7 @@ const useApp = () => {
             textClass: 'Reset'
         }
     ])
-    const nameUser = ref(null)
+    const nameUser = ref('')
 
     const code = ref('')
 
@@ -114,7 +114,7 @@ const useApp = () => {
         code,
         codePreview,
         selectColor: (name) => {
-            return `${codePreview.value += name}`
+            return `${codePreview.value += name} ${nameUser.value += name}`
         },
         selectTextType: (name) => {
             return `${codePreview.value += name}`

@@ -57,9 +57,7 @@
           </div>
           <div class="left__content">
             <label for="code">Code: </label>
-            <textarea class="left__textarea">{{
-              codePreview
-            }}</textarea>
+            <textarea readonly v-model="codePreview" class="left__textarea"></textarea>
           </div>
         </div>
       </div>
@@ -84,14 +82,14 @@ export default {
       selectColor,
       selectTextType,
     } = useApp();
-    watch(nameUser, (newValue) => {
+    watch(nameUser, (newValue, oldValue) => {
+      console.log('newValue', newValue)
+      console.log('oldValue', oldValue)
       if (newValue) {
-        console.log(codePreview.value.concat(newValue));
-        // return codePreview.value.concat("", newValue);
-        return codePreview.value + newValue.value;
-
+        // console.log(`${codePreview.value.concat(newValue)}`);
+        return codePreview.value += newValue 
       }
-    });
+    }, { deep: true });
     return {
       mode,
       nameUser,
@@ -179,6 +177,7 @@ export default {
   width: 30px;
   height: 30px;
   margin: 0 5px 5px 0;
+  cursor: pointer;
 }
 
 .botton__text__type {
