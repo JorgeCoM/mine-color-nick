@@ -1,26 +1,186 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="main" class="flex">
+    <div class="generated__container flex">
+      <div>
+        <h3>Nick Generator by <span class="created"> ToxiCraft </span></h3>
+      </div>
+      <div class="generated__content flex">
+        <div class="generated__right">
+          <div class="generated__container__input">
+            <label for="select mode">Select mode: </label>
+            <select v-model="mode" class="generated__select" name="select mode">
+              <option value="gradient">Gradient</option>
+              <option value="normal" selected>Normal</option>
+            </select>
+          </div>
+          <div class="generated__container__input">
+            <label for="text">Text: </label>
+            <input v-model="nameUser" type="text" class="generated__text" />
+          </div>
+          <div v-if="mode === 'normal'" class="generated__container__input">
+            <label for="text">Select Color: </label>
+            <div class="generated__content__botton">
+              <button
+                v-for="({ name }, index) in colors"
+                :key="index"
+                @click="selectColor(name)"
+                class="botton__color"
+              >
+                {{ name }}
+              </button>
+            </div>
+
+            <label class="margin-top" for="text">Select text type: </label>
+            <div class="generated__content__botton">
+              <button
+                v-for="({ type, name }, index) in textType"
+                :key="index"
+                @click="selectTextType(name)"
+                class="botton__text__type"
+              >
+                {{ type }}
+              </button>
+            </div>
+          </div>
+          <div v-else class="generated__container__input">
+            <label for="text">Gradient select: </label>
+            <input type="text" class="generated__text" />
+          </div>
+        </div>
+        <div class="generated__left">
+          <div class="left__content">
+            <label for="preview">Preview: </label>
+            <p class="preview">{{ nameUser }}</p>
+          </div>
+          <div class="left__content">
+            <label for="code">Code: </label>
+            <textarea class="left__textarea">/nick {{ code }}</textarea> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import useApp from "@/composables/useApp";
+import { ref, watch } from "vue";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  components: {},
+  setup() {
+    const mode = ref("normal");
+    const { colors, textType, code, nameUser, selectColor, selectTextType } =
+      useApp();
+    watch(nameUser, (newValue, oldValue) => {
+      console.log(oldValue)
+      if (newValue) {
+      return console.log(code.value.concat(newValue))
+      }
+    });
+    return {
+      mode,
+      nameUser,
+      code,
+      colors,
+      textType,
+      selectColor,
+      selectTextType,
+    };
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+/* globar class */
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* class */
+
+.created {
+  color: greenyellow;
+}
+
+#main {
+  width: 100vw;
+  height: 100vh;
+}
+
+.generated__container {
+  width: 74%;
+  height: 95%;
+  flex-direction: column;
+}
+
+.generated__content {
+  width: 100%;
+  height: 95%;
+  flex-direction: row;
+}
+
+.generated__right,
+.generated__left {
+  width: 50%;
+  height: 100%;
+}
+
+.generated__container__input {
+  width: 80%;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.generated__select,
+.generated__text {
+  height: 35px;
+}
+
+.generated__content__botton {
+  margin: 3px 0 0 0;
+}
+
+.margin-top {
+  margin: 20px 0 0 0;
+}
+
+.botton__color,
+.botton__text__type {
+  background-color: white;
+  border: 1px black solid;
+  width: 30px;
+  height: 30px;
+  margin: 0 5px 5px 0;
+}
+
+.botton__text__type {
+  width: 100px;
+}
+
+.left__content {
+  width: 90%;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.left__content:nth-child(2) {
+  height: 49%;
+}
+
+.preview {
+  font-size: 25px;
+  margin: 5px 0 0 0;
+}
+
+.left__textarea {
+  height: 100%;
+  resize: none;
+  margin: 5px 0 0 0;
+  padding: 10px;
 }
 </style>
