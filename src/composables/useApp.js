@@ -6,109 +6,118 @@ const useApp = () => {
 
     const colors = ref([{
             name: "&0",
-            colorHex: "#000",
+            colorClass: "background: #000; color: #fff;",
         },
         {
             name: "&1",
-            colorHex: "#2100AA",
+            colorClass: "background: #2100AA; color: #fff;",
         },
         {
             name: "&2",
-            colorHex: "#00AA20",
+            colorClass: "background: #00AA20; color: #fff;",
         },
         {
             name: "&3",
-            colorHex: "#00A9C8",
+            colorClass: "background: #00A9C8; color: #fff;",
         },
         {
             name: "&4",
-            colorHex: "#E10000",
+            colorClass: "background: #E10000; color: #fff;",
         },
         {
             name: "&5",
-            colorHex: "#FF0088",
+            colorClass: "background: #FF0088; color: #fff;",
         },
         {
             name: "&6",
-            colorHex: "#FFAA00",
+            colorClass: "background: #FFAA00; color: #fff;",
         },
         {
             name: "&7",
-            colorHex: "#AAAAA8",
+            colorClass: "background: #AAAAA8;",
         },
         {
             name: "&8",
-            colorHex: "#555554",
+            colorClass: "background: #555554; color: #fff;",
         },
         {
             name: "&9",
-            colorHex: "#7655FE",
+            colorClass: "background: #7655FE;",
         },
         {
             name: "&a",
-            colorHex: "#00FF74",
+            colorClass: "background: #00FF74;",
         },
         {
             name: "&b",
-            colorHex: "#0BFFFF",
+            colorClass: "background: #0BFFFF;",
         },
         {
             name: "&c",
-            colorHex: "#FF5533",
+            colorClass: "background: #FF5533;",
         },
         {
             name: "&d",
-            colorHex: "#FF55DD",
+            colorClass: "background: #FF55DD;",
         },
         {
             name: "&e",
-            colorHex: "#DEFF53",
+            colorClass: "background: #DEFF53;",
         },
         {
             name: "&f",
-            colorHex: "#FFFFFC",
+            colorClass: "background: #FFFFFC;",
         }
     ]);
     const textType = ref([{
-            name: '&l',
-            type: 'bold'
+            name: 'Bold',
+            type: '&l',
+            textClass: 'font-weight: bold;'
         },
         {
-            name: '&n',
-            type: 'Underline'
+            name: 'Underline',
+            type: '&n',
+            textClass: 'text-decoration: underline;'
         },
         {
-            name: '&o',
-            type: 'Italic'
+            name: 'Italic',
+            type: '&o',
+            textClass: 'font-style: italic;'
         },
         {
-            name: '&m',
-            type: 'Strikethrough'
+            name: 'Line-through',
+            type: '&m',
+            textClass: 'text-decoration: line-through;'
         },
         {
-            name: '&k',
-            type: 'Obfuscated'
+            name: 'Obfuscated',
+            type: '&k',
+            textClass: 'Obfuscated'
         },
         {
-            name: '&r',
-            type: 'Reset'
+            name: 'Reset',
+            type: '&r',
+            textClass: 'Reset'
         }
     ])
     const nameUser = ref(null)
 
     const code = ref('')
 
+    const codePreview = ref('/nick ')
+
+
     return {
         colors,
         textType,
         nameUser,
         code,
+        codePreview,
         selectColor: (name) => {
-            console.log(code.value)
-            return console.log(code.value.concat('' ,name))
+            return `${codePreview.value += name}`
         },
         selectTextType: (name) => {
-            return name
+            return `${codePreview.value += name}`
         },
 
     }

@@ -21,10 +21,11 @@
             <label for="text">Select Color: </label>
             <div class="generated__content__botton">
               <button
-                v-for="({ name }, index) in colors"
+                v-for="({ name, colorClass }, index) in colors"
                 :key="index"
                 @click="selectColor(name)"
                 class="botton__color"
+                :style="colorClass"
               >
                 {{ name }}
               </button>
@@ -33,18 +34,20 @@
             <label class="margin-top" for="text">Select text type: </label>
             <div class="generated__content__botton">
               <button
-                v-for="({ type, name }, index) in textType"
+                v-for="({ textClass, name, type }, index) in textType"
                 :key="index"
-                @click="selectTextType(name)"
+                @click="selectTextType(type)"
                 class="botton__text__type"
+                :style="textClass"
               >
-                {{ type }}
+                {{ name }}
               </button>
             </div>
           </div>
           <div v-else class="generated__container__input">
-            <label for="text">Gradient select: </label>
-            <input type="text" class="generated__text" />
+            <!-- <label for="text">Gradient select: </label>
+            <input type="text" class="generated__text" /> -->
+            <p class="coming__soon">Proximamente...</p>
           </div>
         </div>
         <div class="generated__left">
@@ -54,7 +57,9 @@
           </div>
           <div class="left__content">
             <label for="code">Code: </label>
-            <textarea class="left__textarea">/nick {{ code }}</textarea> 
+            <textarea class="left__textarea">{{
+              codePreview
+            }}</textarea>
           </div>
         </div>
       </div>
@@ -70,12 +75,21 @@ export default {
   components: {},
   setup() {
     const mode = ref("normal");
-    const { colors, textType, code, nameUser, selectColor, selectTextType } =
-      useApp();
-    watch(nameUser, (newValue, oldValue) => {
-      console.log(oldValue)
+    const {
+      colors,
+      textType,
+      code,
+      nameUser,
+      codePreview,
+      selectColor,
+      selectTextType,
+    } = useApp();
+    watch(nameUser, (newValue) => {
       if (newValue) {
-      return console.log(code.value.concat(newValue))
+        console.log(codePreview.value.concat(newValue));
+        // return codePreview.value.concat("", newValue);
+        return codePreview.value + newValue.value;
+
       }
     });
     return {
@@ -84,6 +98,7 @@ export default {
       code,
       colors,
       textType,
+      codePreview,
       selectColor,
       selectTextType,
     };
@@ -93,22 +108,29 @@ export default {
 
 <style scoped>
 /* globar class */
+
 .flex {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* class */
+/* Class utils */
 
 .created {
   color: greenyellow;
+}
+
+.coming__soon {
+  font-size: 30px;
 }
 
 #main {
   width: 100vw;
   height: 100vh;
 }
+
+/* Class Container */
 
 .generated__container {
   width: 74%;
@@ -127,6 +149,8 @@ export default {
   width: 50%;
   height: 100%;
 }
+
+/* Class container right */
 
 .generated__container__input {
   width: 80%;
@@ -160,6 +184,8 @@ export default {
 .botton__text__type {
   width: 100px;
 }
+
+/* Class left */
 
 .left__content {
   width: 90%;
